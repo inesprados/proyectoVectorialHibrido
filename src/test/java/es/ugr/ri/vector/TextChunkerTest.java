@@ -1,7 +1,7 @@
 package es.ugr.ri.vector;
 
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.List;
+import java.util.*;
 import org.junit.jupiter.api.Test;
 
 class TextChunkerTest {
@@ -54,5 +54,22 @@ class TextChunkerTest {
         assertEquals("w6 w7 w8", chunks.get(2).text());
 
 
+    }
+
+    //Comprobación de la cobertura
+    @Test
+    void todasLasPalabrasAparecenEnAlgunFragmento() {
+        int n = 23;
+        TextChunker chunker = new TextChunker(5, 2);
+        List<MovieChunk> chunks = chunker.split(movieWith(n));
+
+        Set<String> vistas = new HashSet<>();
+        for (MovieChunk ch : chunks) {
+            vistas.addAll(Arrays.asList(ch.text().split("\\s+")));
+        }
+
+        for (int i = 0; i < n; i++) {
+            assertTrue(vistas.contains("w"+i), "falta la palabra w" + i);
+        }
     }
 }
