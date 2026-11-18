@@ -8,7 +8,7 @@ public final class DemoMain {
         System.out.printf("Corpus: %d películas; segmentador DIDÁCTICO incompleto (%d primeras palabras)%n",movies.size(),c.chunkWords());
         EmbeddingService model = new EmbeddingService();
         try (IndexDirectories indexes = IndexDirectories.memory()) {
-            var stats = new MovieIndexer().build(movies,indexes,new TextChunker(c.chunkWords(), c.fragOverlap()),model);
+            var stats = new MovieIndexer().build(movies,indexes,new TextChunker(c.chunkWords(), c.chunkOverlap()),model);
             System.out.printf("Indexadas %d películas, %d fragmentos%n",stats.movies(),stats.chunks());
             try (MovieSearcher searcher = new MovieSearcher(indexes,model)) {
                 if (args.length > 0) {

@@ -7,7 +7,8 @@ import java.util.*;
 public final class TextChunker {
     private final int k;
     private final int overlap;
-    public TextChunker(int k, int overlap) { if (k < 1 || 0 > overlap || overlap >= k) throw new IllegalArgumentException("k y overlap debes ser positivos y overlap no puede superar a k"); this.k = k; this.overlap = overlap; }
+    public TextChunker(int k, int overlap) { if (k < 1 || 0 > overlap || overlap >= k) 
+            throw new IllegalArgumentException("k y overlap deben ser positivos y 0 < overlap < k"); this.k = k; this.overlap = overlap; }
     public List<MovieChunk> split(Movie movie) {
         if (movie.plot() == null || movie.plot().isBlank()) return List.of();
 
@@ -17,7 +18,7 @@ public final class TextChunker {
         int fragmentoId = 0;
 
         for(int i= 0; i<words.length; i+=pasos){
-            int end = Math.min(i+pasos, words.length);
+            int end = Math.min(i+k, words.length);
             String text = String.join(" ", Arrays.copyOfRange(words, i, end));
             fragmentos.add(new MovieChunk(movie.id(), movie.title(), fragmentoId++, text));
             
