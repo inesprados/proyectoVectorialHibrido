@@ -6,13 +6,14 @@ import java.util.*;
  */
 public final class TextChunker {
     private final int k;
-    public TextChunker(int k) { if (k < 1) throw new IllegalArgumentException("k debe ser positivo"); this.k = k; }
+    private final int overlap;
+    public TextChunker(int k, int overlap) { if (k < 1 || 0 > overlap || overlap >= k) throw new IllegalArgumentException("k y overlap debes ser positivos y overlap no puede superar a k"); this.k = k; this.overlap = overlap; }
     public List<MovieChunk> split(Movie movie) {
         if (movie.plot() == null || movie.plot().isBlank()) return List.of();
 
         String[] words = movie.plot().trim().split("\\s+");
         List<MovieChunk> fragmentos = new ArrayList<>();
-        int pasos = k;
+        int pasos = k - overlap;
         int fragmentoId = 0;
 
         for(int i= 0; i<words.length; i+=pasos){
