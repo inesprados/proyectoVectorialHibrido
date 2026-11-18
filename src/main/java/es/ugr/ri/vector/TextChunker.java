@@ -9,8 +9,19 @@ public final class TextChunker {
     public TextChunker(int k) { if (k < 1) throw new IllegalArgumentException("k debe ser positivo"); this.k = k; }
     public List<MovieChunk> split(Movie movie) {
         if (movie.plot() == null || movie.plot().isBlank()) return List.of();
+
         String[] words = movie.plot().trim().split("\\s+");
-        String first = String.join(" ", Arrays.copyOfRange(words, 0, Math.min(k, words.length)));
-        return List.of(new MovieChunk(movie.id(), movie.title(), 0, first));
+        List<MovieChunk> fragmentos = new ArrayList<>();
+        int pasos = k;
+        int fragmentoId = 0;
+
+        for(int i= 0; i<words.length; i+=pasos){
+            int end = Math.min(i+pasos, words.length);
+            String text = String.join(" ", Arrays.copyOfRange(words, i, end));
+            fragmentos.add(new MovieChunk(movie.id(), movie.title(), fragmentoId++, text));
+            
+            if(end == words.length ) break;
+        }
+        return fragmentos;
     }
 }
