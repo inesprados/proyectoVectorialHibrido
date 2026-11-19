@@ -90,4 +90,34 @@ class TextChunkerTest {
             assertEquals(cola, cabeza, "no hay solapamiento entre #" + (i - 1) + " y #" + i);
         }
     }
+
+    //Tests de valor inválidos
+    @Test
+    void parametrosInvalidosLanzanExcepcion() {
+        assertThrows(IllegalArgumentException.class, () -> new TextChunker(0, 0));
+        assertThrows(IllegalArgumentException.class, () -> new TextChunker(4, -1));
+        assertThrows(IllegalArgumentException.class, () -> new TextChunker(4, 4));
+    }
+
+    @Test
+    void limiteValidoNoLanzaExcepcion() {
+        assertDoesNotThrow(() -> new TextChunker(4, 3));
+    }
+
+    @Test
+    void chunkIdsSonConsecutivos() {
+        TextChunker chunker = new TextChunker(6, 2);
+        List<MovieChunk> chunks = chunker.split(movieWith(30));
+        for (int i = 0; i < chunks.size(); i++) {
+            assertEquals(i, chunks.get(i).chunkId());
+        }
+    }
+
+  @Test
+    void comprobarSinopsisNull() {
+        TextChunker chunker = new TextChunker(4, 1);
+        Movie mv = new Movie("1", "T", null);
+        List<MovieChunk> chunks = chunker.split(mv);
+        assertTrue(chunks.isEmpty());
+    }
 }
