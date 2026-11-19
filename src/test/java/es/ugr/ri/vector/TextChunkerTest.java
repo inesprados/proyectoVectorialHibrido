@@ -72,4 +72,22 @@ class TextChunkerTest {
             assertTrue(vistas.contains("w"+i), "falta la palabra w" + i);
         }
     }
+
+    //Test de solapamiento
+    @Test
+    void fragmentosConsecutivosSeSolapan() {
+        int w = 6, o = 2;
+        TextChunker chunker = new TextChunker(w, o);
+        List<MovieChunk> chunks = chunker.split(movieWith(30));
+
+        for (int i = 1; i < chunks.size(); i++) {
+            String[] anterior = chunks.get(i - 1).text().split("\\s+");
+            String[] actual   = chunks.get(i).text().split("\\s+");
+
+            String cola   = String.join(" ", Arrays.copyOfRange(anterior, Math.max(0, (anterior.length - o)), anterior.length));
+            String cabeza = String.join(" ", Arrays.copyOfRange(actual, 0, o));
+
+            assertEquals(cola, cabeza, "no hay solapamiento entre #" + (i - 1) + " y #" + i);
+        }
+    }
 }
