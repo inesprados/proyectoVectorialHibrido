@@ -8,11 +8,19 @@ public final class MovieIndexerMain {
         }
         RunConfig config = RunConfig.fromProperties();
         var movies = MovieRepository.load(args[0], config.limit());
+        EmbeddingService embeddings = new EmbeddingService();   // el modelo ONNX se carga aquí, fuera de la medición
         try (IndexDirectories indexes = IndexDirectories.disk(Path.of(args[1]))) {
+            long t0 = System.nanoTime();
             var stats = new MovieIndexer().build(movies, indexes,
-                    new TextChunker(config.chunkWords(), config.chunkOverlap()), new EmbeddingService());
-            System.out.printf("Índices persistentes en %s: %d películas y %d fragmentos%n",
-                    args[1], stats.movies(), stats.chunks());
+                    new TextChunker(config.chunkWords(), config.chunkOverlap()), embeddings);
+            long ms = (System.nanoTime() - t0) / 1_000_000;
+            System.out.printf("w=%d o=%d | %d películas, %d fragmentos | %d ms%n",
+                    config.chunkWords(), config.chunkOverlap(), stats.movies(), stats.chunks(), ms);
+    
         }
     }
 }
+
+
+          
+            
