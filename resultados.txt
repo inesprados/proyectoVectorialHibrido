@@ -1,0 +1,82 @@
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36mes.ugr.ri:practica2-docente[0;1m >---------------------[m
+[[1;34mINFO[m] [1mBuilding practica2-docente 1.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mexec-maven-plugin:3.6.2:java[m [1m(default-cli)[m @ [36mpractica2-docente[0;1m ---[m
+
+BM25
+ 1 Jurassic Park          score=0.7895 id=68485 chunk=-1
+ 2 The Hunger Games       score=0.1667 id=31186339 chunk=-1
+ 3 Blade Runner           score=0.1656 id=3746 chunk=-1
+ 4 Titanic                score=0.1629 id=52371 chunk=-1
+ 5 The Matrix             score=0.1608 id=30007 chunk=-1
+
+VECTOR
+ 1 Blade Runner           score=0.6210 id=3746 chunk=2
+ 2 The Matrix             score=0.6135 id=30007 chunk=0
+ 3 Titanic                score=0.5770 id=52371 chunk=4
+ 4 The Hunger Games       score=0.5611 id=31186339 chunk=2
+ 5 Jurassic Park          score=0.5415 id=68485 chunk=1
+
+FRAGMENTOS SIN AGRUPAR
+ 1 Blade Runner           score=0.6210 id=3746 chunk=2
+ 2 The Matrix             score=0.6135 id=30007 chunk=0
+ 3 Blade Runner           score=0.6092 id=3746 chunk=0
+ 4 Blade Runner           score=0.6013 id=3746 chunk=1
+ 5 Blade Runner           score=0.5881 id=3746 chunk=3
+ 6 Blade Runner           score=0.5790 id=3746 chunk=4
+ 7 Titanic                score=0.5770 id=52371 chunk=4
+ 8 The Matrix             score=0.5743 id=30007 chunk=4
+ 9 The Matrix             score=0.5685 id=30007 chunk=3
+10 Titanic                score=0.5637 id=52371 chunk=0
+11 The Hunger Games       score=0.5611 id=31186339 chunk=2
+12 The Hunger Games       score=0.5607 id=31186339 chunk=3
+13 The Matrix             score=0.5607 id=30007 chunk=5
+14 Titanic                score=0.5597 id=52371 chunk=3
+15 The Hunger Games       score=0.5577 id=31186339 chunk=5
+16 The Matrix             score=0.5516 id=30007 chunk=6
+17 Titanic                score=0.5489 id=52371 chunk=1
+18 Blade Runner           score=0.5435 id=3746 chunk=6
+19 Titanic                score=0.5420 id=52371 chunk=7
+20 The Hunger Games       score=0.5417 id=31186339 chunk=6
+21 Jurassic Park          score=0.5415 id=68485 chunk=1
+22 Jurassic Park          score=0.5413 id=68485 chunk=4
+23 Titanic                score=0.5405 id=52371 chunk=2
+24 Titanic                score=0.5351 id=52371 chunk=8
+25 Blade Runner           score=0.5300 id=3746 chunk=5
+26 Jurassic Park          score=0.5288 id=68485 chunk=0
+27 Jurassic Park          score=0.5285 id=68485 chunk=6
+28 Jurassic Park          score=0.5275 id=68485 chunk=3
+29 Titanic                score=0.5263 id=52371 chunk=5
+30 The Matrix             score=0.5175 id=30007 chunk=2
+31 Titanic                score=0.5124 id=52371 chunk=6
+32 The Hunger Games       score=0.5109 id=31186339 chunk=4
+33 The Hunger Games       score=0.5108 id=31186339 chunk=7
+34 Jurassic Park          score=0.5092 id=68485 chunk=5
+35 The Matrix             score=0.5041 id=30007 chunk=1
+36 The Hunger Games       score=0.4955 id=31186339 chunk=1
+37 Jurassic Park          score=0.4953 id=68485 chunk=7
+38 Jurassic Park          score=0.4945 id=68485 chunk=2
+39 The Hunger Games       score=0.4700 id=31186339 chunk=0
+
+GLOBAL
+ 1 Blade Runner           score=0.6114 id=3746 chunk=-1
+ 2 The Matrix             score=0.5675 id=30007 chunk=-1
+ 3 Titanic                score=0.5570 id=52371 chunk=-1
+ 4 The Hunger Games       score=0.5351 id=31186339 chunk=-1
+ 5 Jurassic Park          score=0.5276 id=68485 chunk=-1
+
+RRF
+ 1 Blade Runner           score=0.0323 id=3746 chunk=-1
+ 2 Jurassic Park          score=0.0318 id=68485 chunk=-1
+ 3 The Hunger Games       score=0.0318 id=31186339 chunk=-1
+ 4 The Matrix             score=0.0315 id=30007 chunk=-1
+ 5 Titanic                score=0.0315 id=52371 chunk=-1
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  7.086 s
+[[1;34mINFO[m] Finished at: 2026-11-19T12:22:22+01:00
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m

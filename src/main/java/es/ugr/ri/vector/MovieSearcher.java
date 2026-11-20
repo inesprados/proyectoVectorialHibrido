@@ -43,6 +43,92 @@ public final class MovieSearcher implements AutoCloseable {
         }
         return best.values().stream().sorted(Comparator.comparingDouble(RankedMovie::score).reversed().thenComparing(RankedMovie::id)).limit(k).toList();
     }
+
+    public List<RankedMovie> vectorChunksAvg2(String query, int candidates, int k) throws IOException {
+
+        int n = Math.min(candidates, chunkReader.numDocs());
+        if (n == 0) return List.of();
+
+        var docs = chunks.search(
+                new KnnFloatVectorQuery("vector", embeddings.embed(query), n), n);
+
+        Map<String, List<RankedMovie>> grouped = new HashMap<>();
+
+        for (var hit : docs.scoreDocs) {
+            var d = chunks.storedFields().document(hit.doc);
+
+            var r = new RankedMovie(
+                    d.get("movie_id"),
+                    d.get("title"),
+                    hit.score,
+                    d.getField("chunk_id").numericValue().intValue(),
+                    d.get("chunk_text")
+            );
+
+            grouped.computeIfAbsent(r.id(), id -> new ArrayList<>()).add(r);
+        }
+
+        List<RankedMovie> results = new ArrayList<>();
+
+        for (List<RankedMovie> fragments : grouped.values()) {
+            fragments.sort(
+                    Comparator.comparingDouble(RankedMovie::score).reversed()
+            );
+
+            // Media de los dos fragmentos mejor puntuados.
+            // Si solo hay uno, se utiliza su propia puntuación.
+            int count = Math.min(2, fragments.size());
+
+            double score = fragments.subList(0, count).stream()
+                    .mapToDouble(RankedMovie::score)
+                    .average()
+                    .orElse(0.0);
+
+            // Conservamos el mejor fragmento como explicación del resultado.
+            RankedMovie best = fragments.get(0);
+
+            results.add(new RankedMovie(
+                    best.id(),
+                    best.title(),
+                    score,
+                    best.chunkId(),
+                    best.excerpt()
+            ));
+        }
+
+        return results.stream()
+                .sorted(Comparator.comparingDouble(RankedMovie::score)
+                        .reversed()
+                        .thenComparing(RankedMovie::id))
+                .limit(k)
+                .toList();
+    }
+
+    public List<RankedMovie> vectorChunkHits(String query, int candidates) throws IOException {
+
+        int n = Math.min(candidates, chunkReader.numDocs());
+        if (n == 0) return List.of();
+
+        var docs = chunks.search(
+                new KnnFloatVectorQuery("vector", embeddings.embed(query), n), n);
+
+        List<RankedMovie> results = new ArrayList<>();
+
+        for (var hit : docs.scoreDocs) {
+            var d = chunks.storedFields().document(hit.doc);
+
+            results.add(new RankedMovie(
+                    d.get("movie_id"),
+                    d.get("title"),
+                    hit.score,
+                    d.getField("chunk_id").numericValue().intValue(),
+                    d.get("chunk_text")
+            ));
+        }
+
+        return results;
+    }
+
     public List<RankedMovie> vectorGlobal(String query, int k) throws IOException {
         int n = Math.min(k, globalReader.numDocs());
         if (n == 0) return List.of();

@@ -1,14 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: es.ugr.ri.vector.TextChunkerTest
 -------------------------------------------------------------------------------
-Tests run: 11, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.120 s <<< FAILURE! -- in es.ugr.ri.vector.TextChunkerTest
-es.ugr.ri.vector.TextChunkerTest.comprobarSinopsisNull -- Time elapsed: 0.045 s <<< ERROR!
-java.lang.Error: 
-Unresolved compilation problem: 
-	chunks cannot be resolved
-
-	at es.ugr.ri.vector.TextChunkerTest.comprobarSinopsisNull(TextChunkerTest.java:121)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
-
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.073 s -- in es.ugr.ri.vector.TextChunkerTest
