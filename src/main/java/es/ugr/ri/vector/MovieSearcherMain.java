@@ -12,32 +12,34 @@ public final class MovieSearcherMain {
             if (sample) new MovieIndexer().build(MovieData.sample(), indexes,
                     new TextChunker(config.chunkWords(), config.chunkOverlap()), new EmbeddingService());
             String query = String.join(" ", java.util.Arrays.copyOfRange(args,1,args.length));
+                        
             try (MovieSearcher searcher = new MovieSearcher(indexes, new EmbeddingService())) {
-                show("BM25", searcher.bm25(query, config.k()));
-                show("VECTOR", searcher.vectorChunks(query, config.candidateChunks(), config.k()));
-                show("FRAGMENTOS SIN AGRUPAR", searcher.vectorChunkHits(query, config.candidateChunks()));
-                show("GLOBAL", searcher.vectorGlobal(query, config.k()));
-                show("RRF", searcher.hybridRrf(query, config.candidateChunks(), config.k()));
-            
-                for (int candidates : new int[]{20, 100, 300}) {
-                    System.out.println("\nCANDIDATES = " + candidates);
 
-                    long inicioMax = System.nanoTime();
-                    List<RankedMovie> max = searcher.vectorChunks(query, candidates, config.k());
-                    long tiempoMax = (System.nanoTime() - inicioMax) / 1_000_000;
+                int k = config.k();
 
-                    long inicioAvg2 = System.nanoTime();
-                    List<RankedMovie> avg2 = searcher.vectorChunksAvg2(query, candidates, config.k());
-                    long tiempoAvg2 = (System.nanoTime() - inicioAvg2) / 1_000_000;
+                // Recuperación individual
+                List<RankedMovie> bm25 = searcher.bm25(query, k);
+                List<RankedMovie> vector =
+                        searcher.vectorChunks(query, config.candidateChunks(), k);
 
-                    System.out.println("MAX: películas distintas = " + max.size()
-                            + ", tiempo = " + tiempoMax + " ms");
-                    show("RESULTADOS MAX", max);
+                // Fusión RRF sin ponderar
+                List<RankedMovie> rrf =
+                        RankFusion.rrf(bm25, vector, 60, k);
 
-                    System.out.println("AVG2: películas distintas = " + avg2.size()
-                            + ", tiempo = " + tiempoAvg2 + " ms");
-                    show("RESULTADOS AVG2", avg2);
-                }
+                // Fusión RRF ponderada: 70% BM25 y 30% VECTOR
+                List<RankedMovie> weightedRrf =
+                        RankFusion.rrfWeighted(bm25, vector, 60, k, 0.7, 0.3);
+
+                // Fusión lineal con alpha = 0.5
+                List<RankedMovie> linear =
+                        RankFusion.linear(bm25, vector, k, 0.5);
+
+                // Mostrar los cinco métodos
+                show("BM25", bm25);
+                show("VECTOR", vector);
+                show("RRF", rrf);
+                show("WEIGHTED RRF", weightedRrf);
+                show("LINEAR FUSION", linear);
             }
         }
     }

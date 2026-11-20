@@ -1,0 +1,53 @@
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--------------------< [0;36mes.ugr.ri:practica2-docente[0;1m >---------------------[m
+[[1;34mINFO[m] [1mBuilding practica2-docente 1.0-SNAPSHOT[m
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mexec-maven-plugin:3.6.2:java[m [1m(default-cli)[m @ [36mpractica2-docente[0;1m ---[m
+
+BM25
+ 1 The Matrix             score=4.8502 id=30007 chunk=-1
+ 2 Blade Runner           score=0.9013 id=3746 chunk=-1
+ 3 Jurassic Park          score=0.7759 id=68485 chunk=-1
+ 4 The Hunger Games       score=0.2335 id=31186339 chunk=-1
+ 5 Titanic                score=0.2335 id=52371 chunk=-1
+
+VECTOR
+ 1 The Matrix             score=0.7169 id=30007 chunk=1
+    Fragmento: is rescued by Morpheus and brought aboard a levitating ship called the Nebuchadnezzar. Morpheus tells Neo that humans are fighting against intelligent machines that were created early in the 21st century and have since taken control of the Earth's surface. The machines harvest the bioelectrical energy of humans, who are kept docile within the "Matrix" – a simulation of the world as it was in 1999. Neo has lived in this simulated world since birth; in reality, the year is closer to 2199. Morpheus and his crew belong to a group of free humans who "unplug" others from the Matrix and recruit them to their rebellion against the Machines. They are able to connect themselves to the Matrix and enter
+ 2 Blade Runner           score=0.6101 id=3746 chunk=1
+    Fragmento: based on their empathic response to questions. The subject of the test, Leon , shoots Holden. Bryant wants Deckard to return to work to retire Leon and three other replicants—Roy Batty , Zhora and Pris . Deckard refuses, but after Bryant makes an overt threat, he reluctantly agrees. Sent to the Tyrell Corporation to ensure that the test works on Nexus-6 models, Deckard discovers that Tyrell's assistant Rachael is an experimental replicant who believes herself to be human; Rachael's consciousness has been enhanced with false memories to provide an "emotional cushion". As a result, a more extensive test is required to determine if she is a replicant. Trying to find a way to meet with Tyrell, Roy and Leon go
+ 3 Jurassic Park          score=0.5869 id=68485 chunk=1
+    Fragmento: dinosaur species. They debate the ethics of cloning extinct dinosaurs, with Gennaro being the only one to express optimism. The group sets off to explore the park while Hammond observes his guests along with Head Technician Ray Arnold and game warden Robert Muldoon. Grant spots a sick Triceratops and the group investigates. With a storm heading in, everyone returns to their vehicles except for Sattler, who stays with the park doctor to look after the animal. Jurassic Park's head computer programmer, Dennis Nedry, is secretly in the employ of one of InGen's corporate rivals, and has been paid to steal dinosaur embryos. During his theft, Nedry deactivates the park's security system, allowing him access to the embryo storage. Electric fences
+ 4 Titanic                score=0.5366 id=52371 chunk=6
+    Fragmento: ammunition, Cal realizes to his chagrin that he gave his coat with the diamond to Rose. With the situation now dire, he returns to the boat deck and boards a lifeboat by pretending to look after a lost child. Jack and Rose return to the top deck. All lifeboats have departed and passengers are falling to their deaths as the stern rises out of the water. The ship breaks in half, and the stern side rises 90-degrees into the air. As it sinks, Jack and Rose ride the stern into the ocean. Jack helps Rose onto a wall panel only able to support one person's weight. Holding the panel's edge, he assures her she will die an old woman, warm
+ 5 The Hunger Games       score=0.5264 id=31186339 chunk=1
+    Fragmento: 12 tribute. Katniss and Peeta are taken to the Capitol, accompanied by their frequently drunk mentor, past victor Haymitch Abernathy. He warns them about the "Career" tributes who train intensively at special academies and almost always win. During a TV interview with Caesar Flickerman, Peeta unexpectedly reveals his love for Katniss. She is outraged, believing it to be a ploy to gain audience support, as "sponsors" may provide in-Games gifts of food, medicine, and tools. However, she discovers Peeta meant what he said. The televised Games begin with half of the tributes killed in the first few minutes; Katniss barely survives ignoring Haymitch's advice to run away from the melee over the tempting supplies and weapons strewn in front of
+
+RRF
+ 1 The Matrix             score=0.0164 id=30007 chunk=-1
+ 2 Blade Runner           score=0.0161 id=3746 chunk=-1
+ 3 Jurassic Park          score=0.0159 id=68485 chunk=-1
+ 4 The Hunger Games       score=0.0155 id=31186339 chunk=-1
+ 5 Titanic                score=0.0155 id=52371 chunk=-1
+
+WEIGHTED RRF
+ 1 The Matrix             score=0.0164 id=30007 chunk=-1
+ 2 Blade Runner           score=0.0161 id=3746 chunk=-1
+ 3 Jurassic Park          score=0.0159 id=68485 chunk=-1
+ 4 The Hunger Games       score=0.0156 id=31186339 chunk=-1
+ 5 Titanic                score=0.0155 id=52371 chunk=-1
+
+LINEAR FUSION
+ 1 The Matrix             score=1.0000 id=30007 chunk=-1
+ 2 Blade Runner           score=0.2921 id=3746 chunk=-1
+ 3 Jurassic Park          score=0.2175 id=68485 chunk=-1
+ 4 Titanic                score=0.0268 id=52371 chunk=-1
+ 5 The Hunger Games       score=0.0000 id=31186339 chunk=-1
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] [1;32mBUILD SUCCESS[m
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
+[[1;34mINFO[m] Total time:  9.288 s
+[[1;34mINFO[m] Finished at: 2026-11-20T12:04:21+01:00
+[[1;34mINFO[m] [1m------------------------------------------------------------------------[m
