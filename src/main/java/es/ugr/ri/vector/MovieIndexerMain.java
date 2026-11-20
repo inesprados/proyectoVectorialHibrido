@@ -19,8 +19,4 @@ public final class MovieIndexerMain {
     
         }
     }
-}
-
-
-          
-            
+}           
