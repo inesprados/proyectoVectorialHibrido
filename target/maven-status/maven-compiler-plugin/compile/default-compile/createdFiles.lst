@@ -12,7 +12,9 @@ es/ugr/ri/vector/MovieRepository.class
 es/ugr/ri/vector/MovieIndexerMain.class
 es/ugr/ri/vector/EmbeddingService.class
 es/ugr/ri/vector/RankedMovie.class
+es/ugr/ri/vector/MovieEvaluator$EvaluationResult.class
 es/ugr/ri/vector/MovieIndexer$Stats.class
+es/ugr/ri/vector/MovieEvaluator$QueryResult.class
 es/ugr/ri/vector/RankFusion.class
 es/ugr/ri/vector/DemoMain.class
 es/ugr/ri/vector/MovieSearcher.class

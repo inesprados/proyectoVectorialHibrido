@@ -1,5 +1,10 @@
 package es.ugr.ri.vector;
-import java.util.*;
+
+import org.junit.jupiter.api.Test;
+import java.util.List;
+import java.util.Set;
+import static org.junit.jupiter.api.Assertions.*;
+
 /** Ejecutar sin Maven: javac -d /tmp/metricstest ... && java -cp /tmp/metricstest ... */
 public final class MetricsSmokeTest {
     public static void main(String[] args) {
@@ -12,4 +17,69 @@ public final class MetricsSmokeTest {
         System.out.println("OK: métricas y RRF");
     }
     private static void near(double x,double y) { if(Math.abs(x-y)>1e-9) throw new AssertionError(x+" != "+y); }
+
+    @Test
+    void relevanteEnPrimeraPosicion() {
+        var s = RetrievalMetrics.calculate(
+                List.of("A", "B", "C"),
+                Set.of("A"), 3);
+
+        assertEquals(1.0 / 3, s.precision(), 1e-9);
+        assertEquals(1.0, s.recall(), 1e-9);
+        assertEquals(0.5, s.f1(), 1e-9);
+        assertEquals(1.0, s.ap(), 1e-9);
+        assertEquals(1.0, s.ndcg(), 1e-9);
+    }
+
+    @Test
+    void relevanteEnUltimaPosicion() {
+        var s = RetrievalMetrics.calculate(
+                List.of("A", "B", "C"),
+                Set.of("C"), 3);
+
+        assertEquals(1.0 / 3, s.precision(), 1e-9);
+        assertEquals(1.0, s.recall(), 1e-9);
+        assertEquals(0.5, s.f1(), 1e-9);
+        assertEquals(1.0 / 3, s.ap(), 1e-9);
+        assertEquals(0.5, s.ndcg(), 1e-9);
+    }
+
+    @Test
+    void variosDocumentosRelevantes() {
+        var s = RetrievalMetrics.calculate(
+                List.of("A", "B", "C", "D"),
+                Set.of("B", "D", "E"), 4);
+
+        assertEquals(0.5, s.precision(), 1e-9);
+        assertEquals(2.0 / 3, s.recall(), 1e-9);
+        assertEquals(4.0 / 7, s.f1(), 1e-9);
+        assertEquals(1.0 / 3, s.ap(), 1e-9);
+        assertEquals(0.4981892575, s.ndcg(), 1e-8);
+    }
+
+    @Test
+    void conjuntoSinDocumentosRelevantes() {
+        var s = RetrievalMetrics.calculate(
+                List.of("A", "B", "C"),
+                Set.of(), 3);
+
+        assertEquals(0.0, s.precision(), 1e-9);
+        assertEquals(0.0, s.recall(), 1e-9);
+        assertEquals(0.0, s.f1(), 1e-9);
+        assertEquals(0.0, s.ap(), 1e-9);
+        assertEquals(0.0, s.ndcg(), 1e-9);
+    }
+
+    @Test
+    void relevantesQueNoAparecenEnElRanking() {
+        var s = RetrievalMetrics.calculate(
+                List.of("A", "B", "C"),
+                Set.of("D", "E"), 3);
+
+        assertEquals(0.0, s.precision(), 1e-9);
+        assertEquals(0.0, s.recall(), 1e-9);
+        assertEquals(0.0, s.f1(), 1e-9);
+        assertEquals(0.0, s.ap(), 1e-9);
+        assertEquals(0.0, s.ndcg(), 1e-9);
+    }
 }
