@@ -57,3 +57,22 @@ Parámetros Java opcionales: `-Dchunk.words=120`, `-Dk=10`, `-Dcandidates=100`, 
 ## Nota sobre la verificación
 
 El código se ha actualizado sobre el proyecto anterior. La ejecución completa de Maven/ONNX debe comprobarse en un entorno con Maven y dependencias disponibles antes de distribuirlo.
+
+
+
+--------------------------------------
+# Práctica 2. Recuperación vectorial, híbrida y evaluación
+
+
+## Clases y métodos modificados
+
+| Fichero | Cambio | Actividad |
+|---|---|---|
+| `TextChunker` | Constructor `(k, overlap)` con validación; `split` por oraciones con solapamiento; `sentences` (abreviaturas); `addWordWindows` para oraciones largas | 1 |
+| `RunConfig` | Nuevo parámetro de solapamiento (propiedad `chunk.overlap`) | 1 |
+| `MovieIndexerMain` | Registro de configuración y tiempo de indexación; nuevo constructor del chunker | 1 |
+| `MovieSearcherMain`, `MovieEvaluatorMain`, `DemoMain` | Llamada al nuevo constructor de `TextChunker` | 1 |
+| `ChunkInspectorMain` (nuevo) | Inspección de la segmentación | 1 |
+| `TextChunkerTest` (nuevo) | 18 pruebas de segmentación | 1 |
+| `pom.xml` | JUnit 5 y `maven-surefire-plugin` 3.5.2 | 1 |
+

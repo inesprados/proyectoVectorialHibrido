@@ -13,6 +13,7 @@ class TextChunkerTest {
         return new Movie("1", "T", sb.toString().trim());
     }
 
+    
     @Test
     void sinopsisVaciaNoGeneraFragmentos() {
         TextChunker chunker = new TextChunker(4, 0);
@@ -119,5 +120,72 @@ class TextChunkerTest {
         Movie mv = new Movie("1", "T", null);
         List<MovieChunk> chunks = chunker.split(mv);
         assertTrue(chunks.isEmpty());
+    }
+
+    /** Cinco oraciones de 3 palabras, cada una empieza en mayúscula. */
+    private static final String CINCO = "A b c. D e f. G h i. J k l. M n o.";
+
+    private static List<String> textos(List<MovieChunk> chunks) {
+        List<String> out = new ArrayList<>();
+        for (MovieChunk c : chunks) out.add(c.text());
+        return out;
+    }
+    
+    @Test void abreviaturasNoPartenOraciones() {
+        List<String> ss = TextChunker.sentences("Mr. Smith met Dr. Jones. They left.");
+        assertEquals(2, ss.size());
+        assertEquals("Mr. Smith met Dr. Jones.", ss.get(0));
+        assertEquals("They left.", ss.get(1));
+    }
+
+    @Test void sinSolapamientoLosFragmentosSonOracionesCompletas() {
+        List<MovieChunk> chunks = new TextChunker(6, 0).split(new Movie("1", "T", CINCO));
+        assertEquals(List.of("A b c. D e f.", "G h i. J k l.", "M n o."), textos(chunks));
+    }
+
+    @Test void solapamientoRepiteLaUltimaOracion() {
+        List<MovieChunk> chunks = new TextChunker(6, 3).split(new Movie("1", "T", CINCO));
+        assertEquals(List.of("A b c. D e f.", "D e f. G h i.", "G h i. J k l.", "J k l. M n o."), textos(chunks));
+    }
+
+    @Test void ningunFragmentoSuperaElMaximo() {
+        int[][] configuraciones = {{3, 0}, {4, 1}, {6, 3}, {7, 3}, {9, 5}};
+        for (int[] cfg : configuraciones) {
+            for (MovieChunk c : new TextChunker(cfg[0], cfg[1]).split(new Movie("1", "T", CINCO))) {
+                int n = c.text().split("\\s+").length;
+                assertTrue(n <= cfg[0], "fragmento de " + n + " palabras con k=" + cfg[0]);
+            }
+        }
+    }
+
+    @Test void coberturaConOraciones() {
+        List<MovieChunk> chunks = new TextChunker(6, 3).split(new Movie("1", "T", CINCO));
+        Set<String> vistas = new HashSet<>();
+        for (MovieChunk c : chunks) vistas.addAll(Arrays.asList(c.text().split("\\s+")));
+        for (String palabra : CINCO.split("\\s+")) assertTrue(vistas.contains(palabra), "falta " + palabra);
+    }
+
+    @Test void oracionLargaSeTroceaYLasVecinasSeConservan() {
+        String texto = "Aa bb. X0 x1 x2 x3 x4 x5 x6 x7 x8 x9 x10 x11 x12. Cc dd.";
+        List<MovieChunk> chunks = new TextChunker(5, 2).split(new Movie("1", "T", texto));
+        assertEquals(6, chunks.size());
+        assertEquals("Aa bb.", chunks.get(0).text());
+        assertEquals("Cc dd.", chunks.get(5).text());
+        for (int i = 1; i <= 4; i++) assertTrue(chunks.get(i).text().split("\\s+").length <= 5);
+    }
+
+    @Test void sinopsisRealesCumplenLasPropiedades() {
+        int w = 100;
+        for (Movie m : MovieData.sample()) {
+            List<MovieChunk> chunks = new TextChunker(w, 25).split(m);
+            assertTrue(chunks.size() > 1, m.title() + " debería tener varios fragmentos");
+            String[] palabras = m.plot().trim().split("\\s+");
+            for (int i = 0; i < chunks.size(); i++) {
+                assertEquals(i, chunks.get(i).chunkId());
+                assertTrue(chunks.get(i).text().split("\\s+").length <= w);
+            }
+            assertTrue(chunks.get(chunks.size() - 1).text().endsWith(palabras[palabras.length - 1]),
+                    "se pierde el final de " + m.title());
+        }
     }
 }
